@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI listDisplay;
+    public Slider sanityDisplay;
 
     public GameObject player;
 
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
     public void AddToList(string collectedName)
     {
         collecables.Add(collectedName);
+        sanityDisplay.value += 0.1f;
     }
 
     public void UpdateList()
