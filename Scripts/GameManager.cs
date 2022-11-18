@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public Slider sanityDisplay;
 
     public GameObject player;
+    public GameObject chaser;
+    public float chaserSpeed;
 
     List<string> collecables = new List<string>();
 
@@ -17,18 +19,20 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
+        chaser = GameObject.Find("Chaser");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        chaser.GetComponent<PathToPlayer>().moveSpeed = chaserSpeed;
     }
 
     public void AddToList(string collectedName)
     {
         collecables.Add(collectedName);
         sanityDisplay.value += 0.1f;
+        chaserSpeed = sanityDisplay.value * 5;
     }
 
     public void UpdateList()
