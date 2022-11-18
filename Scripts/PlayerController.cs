@@ -5,7 +5,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Other")]
+    public bool isDead = false;
+
+    [Header("Hiding Mechanics")]
+    public GameObject hidingSpot;
+    public GameObject hidingSpotExit;
     public bool isHiding = false;
+    public bool hidingInRange = false;
 
     [Header("MovementVariables")]
     public float moveSpeed;
@@ -30,8 +36,22 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        verticalInput = Input.GetAxisRaw("Vertical");
-        horizontalInput = Input.GetAxisRaw("Horizontal");
+        if(Input.GetKey(KeyCode.E) && hidingInRange == true)
+        {
+            isHiding = true;
+            transform.position = hidingSpot.transform.position;
+        }
+        else if(Input.GetKeyUp(KeyCode.E) && isHiding == true)
+        {
+            isHiding = false;
+            transform.position = hidingSpotExit.transform.position;
+        }
+
+        if (isHiding == false)
+        {
+            verticalInput = Input.GetAxisRaw("Vertical");
+            horizontalInput = Input.GetAxisRaw("Horizontal");
+        }
         animator.SetFloat("MovementInput", Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
 
         movementDirection = new Vector3(horizontalInput, 0, verticalInput);
@@ -52,6 +72,12 @@ public class PlayerController : MonoBehaviour
             moving = true;
         }
         else { moving = false; }
+
+        if(isDead == true)
+        {
+            animator.SetBool("IsDead", true);
+            gm.GameOver();
+        }
     }
 
     void FixedUpdate()
@@ -71,6 +97,17 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
             gm.AddToList(other.name);
             gm.UpdateList();
+        }
+
+        if(other.CompareTag("HidingSpot"))
+        {
+            hidingInRange = true;
+            hidingSpot = other.gameObject;
+        }
+
+        if(other.CompareTag("Exit"))
+        {
+            hidingSpotExit = other.gameObject;
         }
     }
 }

@@ -26,14 +26,26 @@ public class PathToPlayer : MonoBehaviour
     
     void Update()
     {
-        agent.speed = moveSpeed;
-        agent.destination = currentTarget.transform.position;
-
-        if(player.GetComponent<PlayerController>().isHiding == false)
+        if (player.GetComponent<PlayerController>().isHiding == false && player.GetComponent<PlayerController>().isDead == false)
         {
             currentTarget = player;
         }
+        else if(player.GetComponent<PlayerController>().isHiding == true || player.GetComponent<PlayerController>().isDead == true)
+        {
+            currentTarget = otherTarg;
+        }
+
+        agent.speed = moveSpeed;
+        agent.destination = currentTarget.transform.position;
+        
     }
 
-    
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            player.GetComponent<PlayerController>().isDead = true;
+        }
+    }
+
 }

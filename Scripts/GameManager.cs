@@ -3,15 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("UI display")]
     public TextMeshProUGUI listDisplay;
     public Slider sanityDisplay;
 
+    [Header("CharacterVariables")]
     public GameObject player;
     public GameObject chaser;
     public float chaserSpeed;
+
+    [Header("GameManagement")]
+    public bool isGameActive;
+    public Button restartButton;
+    public GameObject titleScreen;
+    public TextMeshProUGUI gameOverText;
 
     List<string> collecables = new List<string>();
 
@@ -43,5 +52,23 @@ public class GameManager : MonoBehaviour
         {
             listDisplay.text += collectables + "\n";
         }
+    }
+
+    public void GameOver()
+    {
+        gameOverText.gameObject.SetActive(true);
+        isGameActive = false;
+        restartButton.gameObject.SetActive(true);
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void StartGame()
+    {
+        titleScreen.gameObject.SetActive(false);
+        isGameActive = true;
     }
 }
