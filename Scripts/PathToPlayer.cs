@@ -13,7 +13,7 @@ public class PathToPlayer : MonoBehaviour
 
     [Header("Target")]
     public GameObject player;
-    public GameObject otherTarg;
+    public GameObject spawn;
     private GameObject currentTarget;
 
 
@@ -32,7 +32,7 @@ public class PathToPlayer : MonoBehaviour
         }
         else if(player.GetComponent<PlayerController>().isHiding == true || player.GetComponent<PlayerController>().isDead == true)
         {
-            currentTarget = otherTarg;
+            currentTarget = spawn;
         }
 
         agent.speed = moveSpeed;

@@ -47,6 +47,15 @@ public class PlayerController : MonoBehaviour
             transform.position = hidingSpotExit.transform.position;
         }
 
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            gm.GetComponent<GameManager>().HasEBeenPressed = true;
+        }
+        else
+        {
+            gm.GetComponent<GameManager>().HasEBeenPressed = false;
+        }
+
         if (isHiding == false)
         {
             verticalInput = Input.GetAxisRaw("Vertical");

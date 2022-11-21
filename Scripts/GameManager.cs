@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public Button restartButton;
     public GameObject titleScreen;
     public TextMeshProUGUI gameOverText;
+    public bool HasEBeenPressed = false;
 
     List<string> collecables = new List<string>();
 
@@ -35,6 +36,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         chaser.GetComponent<PathToPlayer>().moveSpeed = chaserSpeed;
+        if(HasEBeenPressed == true)
+        {
+            chaser.GetComponent<PathToPlayer>().spawn.gameObject.GetComponent<ChangeChaserSpawn>().ChangeSpawn(Random.Range(1, 5));
+        }
     }
 
     public void AddToList(string collectedName)

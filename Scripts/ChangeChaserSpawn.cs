@@ -4,41 +4,43 @@ using UnityEngine;
 
 public class ChangeChaserSpawn : MonoBehaviour
 {
-    public ArrayList listOfSpawns;
-    public int spawnNumber;
+    public GameObject[] spawns;
     public GameObject currentSpawn;
+    public int spawnNumber = 5;
+    public int num;
 
     private void Start()
     {
-        listOfSpawns.Add(GameObject.FindGameObjectsWithTag("Spawn"));
+        ChangeSpawn(Random.Range(1, 5));
+        Debug.Log("CHANGE SPAWN START");
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void ChangeSpawn(int num)
     {
-        if(collision.gameObject.CompareTag("Enemy"))
-        {
-            spawnNumber = Random.Range(1, 5);
-        }
-    }
+        Debug.Log("CHANGED SPAWN TO: " + num);
+        spawnNumber = num;
 
-    private void RandomSpawn()
-    {
         switch(spawnNumber)
         {
             case 1:
-                currentSpawn = (GameObject)listOfSpawns[1];
+                transform.position = spawns[spawnNumber].transform.position;
+                currentSpawn = spawns[spawnNumber];
                 break;
             case 2:
-                currentSpawn = (GameObject)listOfSpawns[2];
+                transform.position = spawns[spawnNumber].transform.position;
+                currentSpawn = spawns[spawnNumber];
                 break;
             case 3:
-                currentSpawn = (GameObject)listOfSpawns[3];
+                transform.position = spawns[spawnNumber].transform.position;
+                currentSpawn = spawns[spawnNumber];
                 break;
             case 4:
-                currentSpawn = (GameObject)listOfSpawns[4];
+                transform.position = spawns[spawnNumber].transform.position;
+                currentSpawn = spawns[spawnNumber];
                 break;
             case 5:
-                currentSpawn = (GameObject)listOfSpawns[5];
+                transform.position = spawns[spawnNumber].transform.position;
+                currentSpawn = spawns[spawnNumber];
                 break;
         }
     }
