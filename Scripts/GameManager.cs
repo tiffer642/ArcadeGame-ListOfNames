@@ -40,6 +40,16 @@ public class GameManager : MonoBehaviour
         {
             chaser.GetComponent<PathToPlayer>().spawn.gameObject.GetComponent<ChangeChaserSpawn>().ChangeSpawn(Random.Range(1, 5));
         }
+
+        if(Input.GetButtonDown("Start"))
+        {
+            StartGame();
+        }
+
+        if(Input.GetButtonDown("Reset"))
+        {
+            RestartGame();
+        }
     }
 
     public void AddToList(string collectedName)

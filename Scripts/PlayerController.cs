@@ -36,18 +36,19 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKey(KeyCode.E) && hidingInRange == true)
+
+        if(Input.GetButton("Hide") && hidingInRange == true)
         {
             isHiding = true;
             transform.position = hidingSpot.transform.position;
         }
-        else if(Input.GetKeyUp(KeyCode.E) && isHiding == true)
+        else if(Input.GetButtonUp("Hide") && isHiding == true)
         {
             isHiding = false;
             transform.position = hidingSpotExit.transform.position;
         }
 
-        if(Input.GetKeyDown(KeyCode.E))
+        if(Input.GetButtonDown("Hide"))
         {
             gm.GetComponent<GameManager>().HasEBeenPressed = true;
         }
