@@ -36,8 +36,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        verticalInput = Input.GetAxisRaw("Vertical");
+        horizontalInput = Input.GetAxisRaw("Horizontal");
 
-        if(Input.GetButton("Hide") && hidingInRange == true)
+        if (Input.GetButton("Hide") && hidingInRange == true)
         {
             isHiding = true;
             transform.position = hidingSpot.transform.position;
@@ -59,10 +61,14 @@ public class PlayerController : MonoBehaviour
 
         if (isHiding == false)
         {
-            verticalInput = Input.GetAxisRaw("Vertical");
-            horizontalInput = Input.GetAxisRaw("Horizontal");
+            rb.isKinematic = false;
+            animator.SetFloat("MovementInput", Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
         }
-        animator.SetFloat("MovementInput", Mathf.Abs(verticalInput) + Mathf.Abs(horizontalInput));
+        else
+        {
+            rb.isKinematic = true;
+            animator.SetFloat("MovementInput", 0);
+        }
 
         movementDirection = new Vector3(horizontalInput, 0, verticalInput);
         movementDirection.Normalize();
@@ -118,6 +124,20 @@ public class PlayerController : MonoBehaviour
         if(other.CompareTag("Exit"))
         {
             hidingSpotExit = other.gameObject;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("HidingSpot"))
+        {
+            hidingInRange = false;
+            hidingSpot = null;
+        }
+
+        if (other.CompareTag("Exit"))
+        {
+            hidingSpotExit = null;
         }
     }
 }
