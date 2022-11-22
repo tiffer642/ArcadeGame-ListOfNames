@@ -21,7 +21,9 @@ public class GameManager : MonoBehaviour
     public Button restartButton;
     public GameObject titleScreen;
     public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI gameWonText;
     public bool HasEBeenPressed = false;
+    public int numberOfItems = 0;
 
     List<string> collecables = new List<string>();
 
@@ -36,37 +38,43 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         chaser.GetComponent<PathToPlayer>().moveSpeed = chaserSpeed;
-        if(HasEBeenPressed == true)
+        if (HasEBeenPressed == true)
         {
             chaser.GetComponent<PathToPlayer>().spawn.gameObject.GetComponent<ChangeChaserSpawn>().ChangeSpawn(Random.Range(1, 5));
         }
 
-        if(Input.GetButtonDown("Start"))
+        if (Input.GetButtonDown("Start"))
         {
             StartGame();
         }
 
-        if(Input.GetButtonDown("Reset"))
+        if (Input.GetButtonDown("Reset"))
         {
             RestartGame();
         }
-    }
 
+        if (numberOfItems >= 6)
+        {
+            GameWon();
+        }
+    }
     public void AddToList(string collectedName)
     {
         collecables.Add(collectedName);
         sanityDisplay.value += 0.1f;
         chaserSpeed = sanityDisplay.value * 5;
+        numberOfItems++;
     }
 
     public void UpdateList()
     {
-        listDisplay.text = "List\n";
+        listDisplay.text = "List " + numberOfItems + "/6\n";
 
         foreach (string collectables in collecables)
         {
             listDisplay.text += collectables + "\n";
         }
+
     }
 
     public void GameOver()
@@ -85,5 +93,12 @@ public class GameManager : MonoBehaviour
     {
         titleScreen.gameObject.SetActive(false);
         isGameActive = true;
+    }
+
+    public void GameWon()
+    {
+        isGameActive = false;
+        restartButton.gameObject.SetActive(true);
+        gameWonText.gameObject.SetActive(true);
     }
 }
